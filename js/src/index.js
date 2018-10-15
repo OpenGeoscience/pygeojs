@@ -4,7 +4,7 @@ var loadedModules = [
   require('./feature.autogen'),
   require('./featureLayer'),
   require('./layer.autogen'),
-  require('./map'),
+  require('./scene'),
   require('./osmLayer'),
   require('./pointFeature.autogen'),
   require('./sceneObject'),

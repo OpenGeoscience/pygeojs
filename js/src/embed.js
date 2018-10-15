@@ -6,5 +6,5 @@
 
 // Export widget models and views, and the npm package version number.
 //module.exports = require('./example.js');
-module.exports = require('./map.js');
+module.exports = require('./scene.js');
 module.exports['version'] = require('../package.json').version;
