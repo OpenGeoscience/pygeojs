@@ -17,7 +17,7 @@ module.exports = [
      // "load_ipython_extension" function which is required for any notebook
      // extension.
      //
-        entry: './lib/extension.js',
+        entry: './src/extension.js',
         output: {
             filename: 'extension.js',
             path: path.resolve(__dirname, '..', 'pygeojs', 'static'),
@@ -30,7 +30,7 @@ module.exports = [
      // custom widget.
      // It must be an amd module
      //
-        entry: './lib/index.js',
+        entry: './src/index.js',
         output: {
             filename: 'index.js',
             path: path.resolve(__dirname, '..', 'pygeojs', 'static'),
@@ -56,7 +56,7 @@ module.exports = [
      // The target bundle is always `dist/index.js`, which is the path required
      // by the custom widget embedder.
      //
-        entry: './lib/embed.js',
+        entry: './src/embed.js',
         output: {
             filename: 'index.js',
             path: path.resolve(__dirname, 'dist'),

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "IPywidget wrapper for GeoJS",
   "author": "john Tourtellott",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com//pygeojs.git"
@@ -16,23 +16,28 @@
     "jupyterlab-extension"
   ],
   "files": [
-    "lib/**/*.js",
+    "src/*.js",
     "dist/*.js"
   ],
   "scripts": {
+    "autogen": "node ./scripts/generate-wrappers.js",
     "clean": "rimraf dist/",
     "prepublish": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "webpack": "^3.5.5",
-    "rimraf": "^2.6.1"
+    "fs-extra": "^7.0.0",
+    "handlebars": "^4.0.12",
+    "rimraf": "^2.6.1",
+    "webpack": "^3.5.5"
   },
   "dependencies": {
     "@jupyter-widgets/base": "^1.0.0",
+    "geojs": "^0.18.1",
+    "jupyter-dataserializers": "^1.3.0",
     "lodash": "^4.17.4"
   },
   "jupyterlab": {
-    "extension": "lib/labplugin"
+    "extension": "src/labplugin"
   }
 }
