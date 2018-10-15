@@ -1,4 +1,5 @@
-from ._version import version_info, __version__
+version_info = (0, 1, 0)
+__version__ = ".".join(map(str, version_info))
 
 from .scene import scene
 

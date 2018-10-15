@@ -1,4 +1,4 @@
-IPywidget wrapper for GeoJS
+ipywidget wrapper for GeoJS
 
 Package Install
 ---------------

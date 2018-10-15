@@ -1,7 +1,7 @@
 {
-  "name": "pygeojs",
+  "name": "@johnkit/pygeojs",
   "version": "0.1.0",
-  "description": "IPywidget wrapper for GeoJS",
+  "description": "ipywidget wrapper for GeoJS",
   "author": "john Tourtellott",
   "main": "src/index.js",
   "repository": {

@@ -22,7 +22,7 @@ log.set_verbosity(log.DEBUG)
 log.info('setup.py entered')
 log.info('$PATH=%s' % os.environ['PATH'])
 
-LONG_DESCRIPTION = 'IPywidget wrapper for GeoJS'
+LONG_DESCRIPTION = 'ipywidget wrapper for GeoJS'
 
 def js_prerelease(command, strict=False):
     """decorator for building minified js/css prior to another command"""
@@ -127,7 +127,7 @@ with open(os.path.join(here, 'pygeojs', '_version.py')) as f:
 setup_args = {
     'name': 'pygeojs',
     'version': version_ns['__version__'],
-    'description': 'IPywidget wrapper for GeoJS',
+    'description': 'ipywidget wrapper for GeoJS',
     'long_description': LONG_DESCRIPTION,
     'include_package_data': True,
     'data_files': [
@@ -154,6 +154,7 @@ setup_args = {
     'author_email': 'john.tourtellott@kitware.com',
     'url': 'https://github.com//pygeojs',
     'keywords': [
+        'geojs',
         'ipython',
         'jupyter',
         'widgets',

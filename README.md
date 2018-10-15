@@ -1,7 +1,7 @@
 pygeojs
 ===============================
 
-IPywidget wrapper for GeoJS
+ipywidget wrapper for GeoJS
 
 Installation
 ------------
