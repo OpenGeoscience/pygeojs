@@ -6,10 +6,10 @@ from .osmLayer_autogen import osmLayer
 from .tileLayer import tileLayer
 
 @widgets.register
-class geomap(widgets.DOMWidget):
-    """Widget representing GeoJS map (scene)"""
-    _view_name =  traitlets.Unicode('mapView').tag(sync=True)
-    _model_name = traitlets.Unicode('mapModel').tag(sync=True)
+class scene(widgets.DOMWidget):
+    """Widget representing GeoJS scene (map)"""
+    _view_name =  traitlets.Unicode('sceneView').tag(sync=True)
+    _model_name = traitlets.Unicode('sceneModel').tag(sync=True)
     _view_module = traitlets.Unicode('pygeojs').tag(sync=True)
     _model_module = traitlets.Unicode('pygeojs').tag(sync=True)
     _view_module_version = traitlets.Unicode('^0.1.0').tag(sync=True)

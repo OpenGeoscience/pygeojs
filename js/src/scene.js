@@ -5,11 +5,11 @@ var dataserializers = require('jupyter-dataserializers');
 
 var sceneObjectModel = require('./sceneObject.js').sceneObjectModel;
 
-var mapModel = widgets.DOMWidgetModel.extend({
+var sceneModel = widgets.DOMWidgetModel.extend({
 
     initialize: function() {
-        console.log('initialize mapModel')
-        mapModel.__super__.initialize.apply(this, arguments);
+        console.log('initialize sceneModel')
+        sceneModel.__super__.initialize.apply(this, arguments);
         this.obj = null;
         this.createPropertiesArrays();
         this.constructGeoJSObject();
@@ -19,8 +19,8 @@ var mapModel = widgets.DOMWidgetModel.extend({
 
     defaults: function() {
         return _.extend(sceneObjectModel.prototype.defaults.call(this), {
-            _model_name : 'mapModel',
-            _view_name : 'mapView',
+            _model_name : 'sceneModel',
+            _view_name : 'sceneView',
             _model_module : 'pygeojs',
             _view_module : 'pygeojs',
             _model_module_version : '0.1.0',
@@ -52,7 +52,7 @@ var mapModel = widgets.DOMWidgetModel.extend({
     },
 
     constructGeoJSObject: function() {
-        console.log('map.constructGeoJSObject()');
+        console.log('scene.constructGeoJSObject()');
         // console.dir(this);
         //console.assert(this.el, 'Error: this.el not defined');
         let doc = new Document;
@@ -161,12 +161,12 @@ var mapModel = widgets.DOMWidgetModel.extend({
 //     },  sceneObjectModel.serializers),
 // });
 
-var mapView = widgets.DOMWidgetView.extend({
+var sceneView = widgets.DOMWidgetView.extend({
     initialize: function(parameters) {
         console.log('initialize mapView:');
         // console.dir(parameters);
         // console.dir(arguments);
-        mapView.__super__.initialize.apply(this, arguments);
+        sceneView.__super__.initialize.apply(this, arguments);
 
         // console.log('this:')
         // console.dir(this);
@@ -178,7 +178,7 @@ var mapView = widgets.DOMWidgetView.extend({
     processPhosphorMessage: function(msg) {
         // console.log('Message:');
         // console.dir(msg);
-        mapView.__super__.processPhosphorMessage.apply(this, arguments);
+        sceneView.__super__.processPhosphorMessage.apply(this, arguments);
         if (this.el && this.obj && (msg.type == 'resize')) {
             console.debug(`resize`);
             // console.log('this.el:');
@@ -199,10 +199,10 @@ var mapView = widgets.DOMWidgetView.extend({
     },  // processPhosphorMessage()
 
     render: function() {
-        console.log('render mapView');
-        mapView.__super__.render.apply(this, arguments);
+        console.log('render sceneView');
+        sceneView.__super__.render.apply(this, arguments);
         if (!this.obj) {
-            console.assert('Map not initialized');
+            console.assert('Scene not initialized');
             return;
         }
 
@@ -223,10 +223,10 @@ var mapView = widgets.DOMWidgetView.extend({
         this.obj.zoom(zoomNew);
         //console.log(`zoom_changed: ${zoomNew}`);
     }  // zoom_changed()
-});  // mapView
+});  // sceneView
 
 
 module.exports = {
-    mapModel: mapModel,
-    mapView: mapView,
+    sceneModel: sceneModel,
+    sceneView: sceneView,
 };

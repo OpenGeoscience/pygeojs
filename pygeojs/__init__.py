@@ -1,6 +1,6 @@
 from ._version import version_info, __version__
 
-from .scene import geomap
+from .scene import scene
 
 def _jupyter_nbextension_paths():
     return [{
