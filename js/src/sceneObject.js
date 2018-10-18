@@ -337,9 +337,8 @@ var sceneObjectModel = widgets.WidgetModel.extend({
                     return;
                 }
             }
-
             if (!converterName) {
-                toSet[propName] = this.obj[propName];
+                toSet[propName] = this.obj[propName]();
                 return;
             }
 
@@ -352,6 +351,8 @@ var sceneObjectModel = widgets.WidgetModel.extend({
             toSet[propName] = converterFn.bind(this)(this.obj[propName], propName);
         }, this);
 
+        // console.log('toSet:');
+        // console.dir(toSet);
         if (toSet) {
             // Apply all direct changes at once
             this.set(toSet, 'pushFromGeoJS');

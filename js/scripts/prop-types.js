@@ -251,7 +251,7 @@ class Bool extends BaseType {
 class Int extends BaseType {
     constructor(defaultValue, options) {
         options = options || {};
-        super();
+        super(options);
         this.minValue = options.minValue;
         this.maxValue = options.maxValue;
         this.defaultValue = (defaultValue === null || defaultValue === undefined) && !this.nullable ? 0 : defaultValue ;

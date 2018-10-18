@@ -13,7 +13,7 @@ var tileLayerModel = autogen_tileLayerModel.extend({
     getConstructorArgNames: function() {
         let argNames = [
             'animationDuration', 'baseUrl', 'cacheSize', 'imgFormat', 'keepLower',
-            'maxLevel', 'minLevel', 'tileHeight', 'tileWidth', 'topDown',
+            'maxLevel', 'minLevel', 'tileHeight', 'tileWidth', 'topDown', 'url',
             'wrapX', 'wrapY',
         ];
         return argNames.concat(tileLayerModel.__super__.getConstructorArgNames());

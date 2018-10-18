@@ -43,13 +43,13 @@ class scene(widgets.DOMWidget):
     _layers = traitlets.Tuple().tag(sync=True, **widgets.widget_serialization)
 
 
-    def createLayer(self, layer_type):
+    def createLayer(self, layer_type, **kwargs):
         if 'osm' == layer_type:
-            layer = osmLayer(self.model_id)
+            layer = osmLayer(self.model_id, **kwargs)
         elif 'feature' == layer_type:
-            layer = featureLayer(self.model_id)
+            layer = featureLayer(self.model_id, **kwargs)
         elif 'tile' == layer_type:
-            layer = tileLayer(self.model_id)
+            layer = tileLayer(self.model_id, **kwargs)
         else:
             raise Exception(
                 'Unrecognized layer type \"{}\"; You must specify layer_type as one of {osm, feature}'

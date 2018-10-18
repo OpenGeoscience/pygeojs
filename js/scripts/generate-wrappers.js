@@ -79,8 +79,8 @@ function getClassConfig(className) {
 
     const result = Object.assign({}, curClass);
 
-    result.propsDefinedByThree = [];
-    result.propsDefinedByThree = result.propsDefinedByThree.concat(curClass.propsDefinedByThree || []);
+    result.propsDefinedByGeoJS = [];
+    result.propsDefinedByGeoJS = result.propsDefinedByGeoJS.concat(curClass.propsDefinedByGeoJS || []);
 
     // combine cur props with superclass properties for allProperties
     result.allProperties = {};
@@ -89,11 +89,11 @@ function getClassConfig(className) {
         const superClassConfig = getClassConfig(curClass.superClass);
         Object.assign(result.allProperties, superClassConfig.allProperties);
 
-        result.propsDefinedByThree = result.propsDefinedByThree.concat(superClassConfig.propsDefinedByThree || []);
+        result.propsDefinedByGeoJS = result.propsDefinedByGeoJS.concat(superClassConfig.propsDefinedByGeoJS || []);
     }
     Object.assign(result.allProperties, curClass.properties);
 
-    // we want to inherit all propsDefinedByThree
+    // we want to inherit all propsDefinedByGeoJS
 
     // add defaults
     _.defaults(
@@ -238,7 +238,7 @@ class JavascriptWrapper {
             },
             properties: this.properties,
             dependencies: this.dependencies,
-            props_created_by_three: this.config.propsDefinedByThree,
+            props_created_by_geojs: this.config.propsDefinedByGeoJS,
             serialized_props: this.serializedProps,
             enum_properties: this.enum_properties,
             override_class: this.overrideClass, // { relativePath }

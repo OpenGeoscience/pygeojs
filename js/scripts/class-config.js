@@ -28,7 +28,8 @@ module.exports = {
             selectionAPI: new Types.Bool(false),
             style:        new Types.Dict(),
             visible:      new Types.Bool(true),
-        }
+        },
+        propsDefinedByGeoJS: ['bin', 'gcs'],
     },
 
     featureLayer: {
@@ -61,6 +62,7 @@ module.exports = {
             zIndex:             new Types.Int(null, {nullable: true}),
         },
         constructorArgs: ['map_id'],
+        propsDefinedByGeoJS: ['attribution', 'zIndex'],
     },
 
     osmLayer: {
@@ -70,6 +72,7 @@ module.exports = {
             mapOpacity: new Types.Float(null, {nullable:true, minValue:0.0, maxValue:1.0})
         },
         constructorArgs: ['map_id'],
+        propsDefinedByGeoJS: ['mapOpacity'],
     },
 
     pointFeature: {
@@ -114,9 +117,5 @@ module.exports = {
             // wrapY:             new Types.Bool(false, {nullable: true}),
         },
         constructorArgs: ['map_id']
-        // ['map_id', 'animationDuration', 'attribution', 'baseUrl',
-        //     'cacheSize', 'imgFormat', 'keepLower', 'maxLevel', 'minLevel',
-        //     'tileHeight', 'tileWidth', 'topDown', 'wrapX', 'wrapY'
-        // ],
     }
 }

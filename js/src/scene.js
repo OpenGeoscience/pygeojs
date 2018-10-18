@@ -1,5 +1,6 @@
 var _ = require('underscore');
-var geojs = require('geojs');
+const geojs = require('geojs');
+console.debug(`Using geojs ${geojs.version}`);
 var widgets = require('@jupyter-widgets/base');
 var dataserializers = require('jupyter-dataserializers');
 
@@ -30,7 +31,7 @@ var sceneModel = widgets.DOMWidgetModel.extend({
             autoResize: true,
             // bounds
             // camera
-            center: {'x': 0.0, 'y': 0.0},
+            center: {x: 0.0, y: 0.0},
             clampBoundsX: false,
             clampBoundsY: true,
             clampZoom: true,
@@ -63,12 +64,31 @@ var sceneModel = widgets.DOMWidgetModel.extend({
         // console.log('map object:');
         // console.dir(this.obj);
 
+        // Sync kernel on user pan
+        this.obj.geoOn(geojs.event.pan, function(evnt) {
+            const geoCenter = this.obj.center();
+            // console.log(`geoCenter ${geoCenter.x}, ${geoCenter.y}`);
+            const modelCenter = this.get('center');
+            // console.log(`modelCenter ${modelCenter.x}, ${modelCenter.y}`)
+
+            // Check that center hasn't changed "alot".
+            // This averts a lockup condition that can occur when using
+            // the mouse wheel to zoom. The cause is not fully understood,
+            // but is related to numerical precision of the center coords.
+            if ((geoCenter.x.toFixed(6) === modelCenter.x.toFixed(6)) &&
+                (geoCenter.y.toFixed(6) === modelCenter.y.toFixed(6))) {
+                return;  // close enough
+            }
+            this.set({center: geoCenter});
+            this.save_changes();
+        }.bind(this));
+
         // Sync kernel when user zooms map
         this.obj.geoOn(geojs.event.zoom, function(evnt) {
             // console.log(`Zoom event`);
             // console.dir(evnt);
             this.set('zoom', evnt.zoomLevel);
-            //this.save_changes();  // syncs kernel to client?
+            this.save_changes();
         }.bind(this));
 
     },
@@ -95,9 +115,8 @@ var sceneModel = widgets.DOMWidgetModel.extend({
         this.property_converters['unitsPerPixel'] = null;
         this.property_converters['zoom'] = 'convertFloat';
 
-        this.property_assigners['center'] = 'assignDict';
-        this.property_assigners['maxBounds'] = 'assignDict';
-
+        // this.property_assigners['center'] = 'assignDict';
+        // this.property_assigners['maxBounds'] = 'assignDict';
     },
 
 
@@ -217,12 +236,6 @@ var sceneView = widgets.DOMWidgetView.extend({
         this.obj.draw();
     },  // render()
 
-    // Syncs client to kernel update
-    updateZoom: function() {
-        let zoomNew = this.model.get('zoom');
-        this.obj.zoom(zoomNew);
-        //console.log(`zoom_changed: ${zoomNew}`);
-    }  // zoom_changed()
 });  // sceneView
 
 

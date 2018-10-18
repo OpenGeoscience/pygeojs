@@ -15,7 +15,7 @@ class tileLayer(tileLayerBase):
     Manually generated because parameters are read_only, which isn't handled in widget
     """
 
-    def __init__(self, map_id='', animationDuration=0, baseUrl=None, cacheSize=400, imgFormat="png", keepLower=True, maxLevel=18, minLevel=0, tileHeight=256, tileWidth=256, topDown=False, wrapX=True, wrapY=False, **kwargs):
+    def __init__(self, map_id='', animationDuration=0, baseUrl=None, cacheSize=400, imgFormat="png", keepLower=True, maxLevel=18, minLevel=0, tileHeight=256, tileWidth=256, topDown=False, url=None, wrapX=True, wrapY=False, **kwargs):
         kwargs['map_id'] = map_id
         self.set_trait('animationDuration', animationDuration)
         self.set_trait('baseUrl', baseUrl)
@@ -27,6 +27,7 @@ class tileLayer(tileLayerBase):
         self.set_trait('tileHeight', tileHeight)
         self.set_trait('tileWidth', tileWidth)
         self.set_trait('topDown', topDown)
+        self.set_trait('url', url)
         self.set_trait('wrapX', wrapX)
         self.set_trait('wrapY', wrapY)
         super(tileLayer, self).__init__(**kwargs)
@@ -57,6 +58,8 @@ class tileLayer(tileLayerBase):
     tileWidth = CInt(None, allow_none=True, read_only=True).tag(sync=True)
 
     topDown = Bool(None, allow_none=True, read_only=True).tag(sync=True)
+
+    url = Unicode(None, allow_none=True, read_only=True).tag(sync=True)
 
     wrapX = Bool(None, allow_none=True, read_only=True).tag(sync=True)
 
