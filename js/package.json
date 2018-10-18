@@ -1,6 +1,6 @@
 {
   "name": "@johnkit/pygeojs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "ipywidget wrapper for GeoJS",
   "author": "john Tourtellott",
   "main": "src/index.js",
@@ -22,6 +22,7 @@
   "scripts": {
     "autogen": "node ./scripts/generate-wrappers.js",
     "clean": "rimraf dist/",
+    "postinstall": "npm run autogen",
     "prepublish": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
