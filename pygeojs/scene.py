@@ -43,13 +43,29 @@ class scene(widgets.DOMWidget):
     _layers = traitlets.Tuple().tag(sync=True, **widgets.widget_serialization)
 
 
+    def __init__(self, *args, **kwargs):
+        super(scene, self).__init__(*args, **kwargs)
+        # Set listener for message, but not working for some reason
+        self.on_msg(self._receive_message)
+
+
     def createLayer(self, layer_type, **kwargs):
+        """"""
+        # Hide default attribution if url is set
+        # print(kwargs)
+        if kwargs.get('url') is not None and kwargs.get('attribution') is None:
+            kwargs['attribution'] = ''
+        # print(kwargs.get('attribution'))
+
+        # Even though map_id is a keyword argument to the layer constructor, you
+        # MUST provide model_id, because it is needed to instantiate the layer
+        # on the client (javascript) side.
         if 'osm' == layer_type:
-            layer = osmLayer(self.model_id, **kwargs)
+            layer = osmLayer(map_id=self.model_id, **kwargs)
         elif 'feature' == layer_type:
-            layer = featureLayer(self.model_id, **kwargs)
+            layer = featureLayer(map_id=self.model_id, **kwargs)
         elif 'tile' == layer_type:
-            layer = tileLayer(self.model_id, **kwargs)
+            layer = tileLayer(map_id=self.model_id, **kwargs)
         else:
             raise Exception(
                 'Unrecognized layer type \"{}\"; You must specify layer_type as one of {osm, feature}'
@@ -64,3 +80,9 @@ class scene(widgets.DOMWidget):
     @traitlets.default('layout')
     def _default_layout(self):
         return widgets.Layout(height='400px', align_self='stretch')
+
+
+    def _receive_message(self, widget, msg):
+        """"""
+        print(msg)
+        raise Exception(msg)

@@ -337,7 +337,8 @@ var sceneObjectModel = widgets.WidgetModel.extend({
                     return;
                 }
             }
-            if (!converterName) {
+
+            if ((!converterName && (this.obj[propName]) instanceof Function)) {
                 toSet[propName] = this.obj[propName]();
                 return;
             }

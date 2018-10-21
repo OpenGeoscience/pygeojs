@@ -19,15 +19,27 @@ var osmLayerModel = autogenosmLayerModel.extend({
         let map_model_id = this.get('map_id');
         console.log(`map_model_id: ${map_model_id}`);
 
-        // Build dictionary of constructor-only args (tileLayer)
-        let args = {};
+        // Build dictionary of constructor-only args from tileLayer
+        // These are read-only traits that don't otherwise get set
+        // on client side.
+        let args = Object.assign({}, this.constructor.args);
         let argNames = this.getConstructorArgNames();
         for (let argName of argNames) {
             let argValue = this.get(argName);
+            // console.log(`argName ${argName}, argValue ${argValue}`);
             console.assert(argValue !== undefined, `${argName} not defined`);
             if (argValue != null) { // null ==> default
                 args[argName] = argValue;
             }
+        }
+
+        // Two workarounds for layer attribution:
+        // * Current logic does not propogate superclass constructor args
+        // * Change null to undefined in order to workaround the lack of
+        // "undefined" values in the python model.
+        args.attribution = this.get('attribution');
+        if (args.attribution === null) {
+            delete args.attribution;
         }
 
         return new Promise(resolve => {

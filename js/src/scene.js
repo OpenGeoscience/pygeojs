@@ -16,6 +16,12 @@ var sceneModel = widgets.DOMWidgetModel.extend({
         this.constructGeoJSObject();
         this.syncToGeoJSObj(true);
         sceneObjectModel.prototype.setupListeners.call(this);
+
+        this.on('msg:custom', function(content) {
+            console.log(`!CUSTOM MESSAGE: ${content}:`);
+            console.dir(content);
+            this.send('Received your custom message!');
+        }.bind(this));
     },
 
     defaults: function() {
@@ -56,8 +62,8 @@ var sceneModel = widgets.DOMWidgetModel.extend({
         console.log('scene.constructGeoJSObject()');
         // console.dir(this);
         //console.assert(this.el, 'Error: this.el not defined');
-        let doc = new Document;
-        this.mapElement = doc.createElement('div');
+
+        this.mapElement = document.createElement('div');
         this.mapElement.setAttribute('class', 'geojs-doc-element');
         this.mapElement.setAttribute('style', 'height: 100%; width: 100%');
         this.obj = geojs.map({node: this.mapElement});
