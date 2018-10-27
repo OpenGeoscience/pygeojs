@@ -18,18 +18,19 @@ module.exports = {
         superClass: 'sceneObject',
         relativePath: './feature',
         properties: {
-            _data:         new Types.Array(),
+            featureType:  new Types.String(''),  // internal
+            layer_id:     new Types.String(''),  // internal
 
             bin:          new Types.Float(null, {nullable:true}),
-            data:         new Types.Array(),
+            //data:         new Types.Array(),
             gcs:          new Types.String(null, {nullable:true}),
             // layer
             // renderer
             selectionAPI: new Types.Bool(false),
-            style:        new Types.Dict(),
+            //style:        new Types.Dict(),
             visible:      new Types.Bool(true),
         },
-        constructorArgs: ['bin', 'gcs', 'selectionAPI', 'style', 'visible'],
+        constructorArgs: ['bin', 'gcs', 'selectionAPI', 'visible'],
         propsDefinedByGeoJS: ['bin', 'gcs'],
     },
 
@@ -44,7 +45,7 @@ module.exports = {
     layer: {
         relativePath: './layer',
         properties: {
-            map_id:             new Types.String(''),  // internal
+            map_id:             new Types.String(''),  // internal use
 
             active:             new Types.Bool(true),
             annotations:        new Types.Array(),
@@ -82,13 +83,14 @@ module.exports = {
         superClass: 'feature',
         properties: {
             clustering:          new Types.Bool(false),
+            dataArray:           new Types.Array(),
             dynamicDraw:         new Types.Bool(false),
-            position:            new Types.Array(),
+            positionArray:      new Types.Array(),
             primitiveShape:      new Types.String('sprite'),
-            style:               new Types.Dict(),
+            //style:               new Types.Dict(),
         },
-        constructorArgs: ['clustering', 'dynamicDraw', 'position', 'primitiveShape', 'style'],
-        propsDefinedByGeoJS: ['clustering', 'dynamicDraw', 'position', 'primitiveShape', 'style'],
+        constructorArgs: ['clustering', 'dataArray', 'dynamicDraw', 'positionArray', 'primitiveShape'],
+        propsDefinedByGeoJS: ['clustering', 'dynamicDraw', 'primitiveShape'],
 
     },
 

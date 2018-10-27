@@ -20,6 +20,23 @@ var featureLayerModel = autogenFeatureLayerModel.extend({
         console.log(`map_model:`);
         console.dir(map_model);
 
+        return new Promise(resolve => {
+            this.widget_manager.get_model(map_model_id)
+                .then((map_model => {
+                    // console.log(`map_model:`);
+                    // console.dir(map_model);
+                    console.log(`creating feature layer`)
+
+                    this.obj = map_model.obj.createLayer('feature');
+                    // console.log(`featureLayer.obj:`);
+                    // console.dir(this.obj);
+
+                    // console.log(`map layers:`);
+                    // console.dir(map_model.obj.layers());
+
+                    resolve(this.obj);
+                }));
+        });
     }  // buildGeoJSObject()
 
 });

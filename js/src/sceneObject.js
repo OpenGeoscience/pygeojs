@@ -339,6 +339,11 @@ var sceneObjectModel = widgets.WidgetModel.extend({
             }
 
             if ((!converterName && (this.obj[propName]) instanceof Function)) {
+            // if (!converterName) {
+            //     if (typeof this.obj[propName] != 'function') {
+            //         console.log(`${propName} is not a function`);
+            //         return
+            //     }
                 toSet[propName] = this.obj[propName]();
                 return;
             }
@@ -346,7 +351,7 @@ var sceneObjectModel = widgets.WidgetModel.extend({
             converterName = converterName + 'ThreeToModel';
             var converterFn = this[converterName];
             if (!converterFn) {
-                throw new Error('invalid converter name: ' + converterName);
+                throw new Error(`invalid converter name ${converterName} for prop ${propName}`);
             }
 
             toSet[propName] = converterFn.bind(this)(this.obj[propName], propName);
@@ -406,7 +411,16 @@ var sceneObjectModel = widgets.WidgetModel.extend({
         if (!obj) {
             return;
         }
+        if (!obj[key]) {
+            console.warn(`obj[key] undefined for object type ${typeof obj}, key ${key}`)
+            return;
+        }
         var existing = obj[key];
+        if (!existing.splice) {
+            console.warn(`obj[key].splice undefined for object type ${typeof obj}, key ${key}`);
+            console.dir(existing);
+            return;
+        }
         if (existing !== null && existing !== undefined) {
             // existing.splice(0, existing.length, ...value);
             existing.splice.apply(existing, [0, existing.length].concat(value));
