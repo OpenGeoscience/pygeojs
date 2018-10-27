@@ -86,3 +86,11 @@ class scene(widgets.DOMWidget):
         """"""
         print(msg)
         raise Exception(msg)
+
+    def _handle_custom_msg(self, content, buffers):
+        with open('/home/john/temp/custom_msg.txt', 'w') as f:
+            f.write(content)
+            f.write('\n')
+
+        print(content)
+        raise Exception(content)

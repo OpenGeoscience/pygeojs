@@ -18,9 +18,25 @@ var sceneModel = widgets.DOMWidgetModel.extend({
         sceneObjectModel.prototype.setupListeners.call(this);
 
         this.on('msg:custom', function(content) {
-            console.log(`!CUSTOM MESSAGE: ${content}:`);
+            console.log(`CUSTOM MESSAGE: ${content}:`);
             console.dir(content);
             this.send('Received your custom message!');
+
+            if (content.method == 'set_zoom_and_center') {
+                let bounds = {
+                    left:   content.params[0],
+                    bottom: content.params[1],
+                    right:  content.params[2],
+                    top:    content.params[3],
+                }
+                console.log('bounds:');
+                console.dir(bounds);
+                let zc = this.obj.zoomAndCenterFromBounds(bounds);
+                console.log('zoom & center:');
+                console.dir(zc);
+                this.obj.center(zc.center);
+                this.obj.zoom(zc.zoom - 0.5);  // zoom out by fixed offset
+            }
         }.bind(this));
     },
 
