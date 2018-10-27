@@ -22,16 +22,16 @@ module.exports = {
             layer_id:     new Types.String(''),  // internal
 
             bin:          new Types.Float(null, {nullable:true}),
-            //data:         new Types.Array(),
+            data:         new Types.Array(),
             gcs:          new Types.String(null, {nullable:true}),
             // layer
             // renderer
             selectionAPI: new Types.Bool(false),
-            //style:        new Types.Dict(),
+            style:        new Types.Dict(),
             visible:      new Types.Bool(true),
         },
-        constructorArgs: ['bin', 'gcs', 'selectionAPI', 'visible'],
-        propsDefinedByGeoJS: ['bin', 'gcs'],
+        constructorArgs: ['bin', 'data', 'gcs', 'selectionAPI', 'style', 'visible'],
+        propsDefinedByGeoJS: ['bin', 'gcs', 'style'],
     },
 
     featureLayer: {
@@ -83,13 +83,11 @@ module.exports = {
         superClass: 'feature',
         properties: {
             clustering:          new Types.Bool(false),
-            dataArray:           new Types.Array(),
             dynamicDraw:         new Types.Bool(false),
-            positionArray:      new Types.Array(),
+            position:            new Types.Array(),
             primitiveShape:      new Types.String('sprite'),
-            //style:               new Types.Dict(),
         },
-        constructorArgs: ['clustering', 'dataArray', 'dynamicDraw', 'positionArray', 'primitiveShape'],
+        constructorArgs: ['clustering', 'dynamicDraw', 'position', 'primitiveShape'],
         propsDefinedByGeoJS: ['clustering', 'dynamicDraw', 'primitiveShape'],
 
     },

@@ -17,8 +17,8 @@ var featureLayerModel = autogenFeatureLayerModel.extend({
         let map_model_id = this.get('map_id');
         console.log(`map_model_id: ${map_model_id}`);
         let map_model = this.widget_manager.get_model(map_model_id);
-        console.log(`map_model:`);
-        console.dir(map_model);
+        // console.log(`map_model:`);
+        // console.dir(map_model);
 
         return new Promise(resolve => {
             this.widget_manager.get_model(map_model_id)

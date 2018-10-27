@@ -22,26 +22,29 @@ var featureModel = autogen_featureModel.extend({
         return new Promise(resolve => {
             this.widget_manager.get_model(layer_model_id)
                 .then((layer_model => {
-                    console.log(`layer_model:`);
-                    console.dir(layer_model);
+                    // console.log(`layer_model:`);
+                    // console.dir(layer_model);
                     console.log(`featureType ${this.get('featureType')}`);
-                    console.log('arguments:')
-                    console.dir(arguments);
 
                     this.obj = layer_model.obj.createFeature(this.get('featureType'));
 
-                    let dataArray = this.get('dataArray');
+                    let dataArray = this.get('data');
                     if (dataArray) {
-                        console.log('dataArray');
-                        console.dir(dataArray);
+                        // console.log('data:');
+                        // console.dir(dataArray);
                         this.obj.data(dataArray);
+                    }
+                    else {
+                        console.warn('MISSING data array');
                     }
 
                     // Convert position array to function, as required by GeoJS
-                    let positionArray = this.get('positionArray');
+                    let positionArray = this.get('position');
                     if (positionArray) {
+                        // console.log('position:');
+                        // console.dir(positionArray);
                         this.obj.position((dataItem, dataIndex) => {
-                            console.debug(`dataIndex ${dataIndex}`);
+                            // console.debug(`dataIndex ${dataIndex}`);
                             // Workaround undiagnosed problem where dataIndex
                             // is sometimes undefined. It appears to be realted
                             // to mousemove events.
@@ -56,21 +59,21 @@ var featureModel = autogen_featureModel.extend({
                                 }
                             } // if
                             let position = positionArray[dataIndex];
-                            console.debug(`position ${position.x}, ${position.y}`);
+                            //console.debug(`position ${position.x}, ${position.y}`);
                             return position;
                         });
 
                     }
                     else {
-                        console.log('MISSING positionArray')
+                        console.warn('MISSING position array')
                     }
 
 
-                    console.log(`geojs feature:`);
-                    console.dir(this.obj);
+                    // console.log(`geojs feature:`);
+                    // console.dir(this.obj);
 
-                    // console.log(`map layers:`);
-                    // console.dir(layer_model.obj.layers());
+                    // console.log(`layer features:`);
+                    // console.dir(layer_model.obj.features());
 
                     resolve(this.obj);
                 }));
