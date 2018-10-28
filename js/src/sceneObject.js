@@ -351,7 +351,13 @@ var sceneObjectModel = widgets.WidgetModel.extend({
             converterName = converterName + 'ThreeToModel';
             var converterFn = this[converterName];
             if (!converterFn) {
+                // DO NOT REMOVE NEXT LINE without talking to johnt first.
+                // It's borderline madness, but removing this exception breaks
+                // point features, and who knows what else. Sure wish I knew why...
+                // The breaking logic (chaning it to a warning) follows:
                 throw new Error(`invalid converter name ${converterName} for prop ${propName}`);
+                // console.warn(`invalid converter name ${converterName} for prop ${propName}`);
+                // return;
             }
 
             toSet[propName] = converterFn.bind(this)(this.obj[propName], propName);

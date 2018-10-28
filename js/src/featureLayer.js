@@ -1,15 +1,19 @@
 var _ = require('underscore');
 var GeoJS = require('geojs');
 
-var autogenFeatureLayerModel = require('./featureLayer.autogen.js').featureLayerModel;
+var autogen_featureLayerModel = require('./featureLayer.autogen.js').featureLayerModel;
 
 
-var featureLayerModel = autogenFeatureLayerModel.extend({
+var featureLayerModel = autogen_featureLayerModel.extend({
 
     defaults: function() {
-        return _.extend(autogenFeatureLayerModel.prototype.defaults.call(this), {
+        return _.extend(autogen_featureLayerModel.prototype.defaults.call(this), {
             _features: [],
         });
+    },
+
+    createPropertiesArrays: function() {
+        autogen_featureLayerModel.prototype.createPropertiesArrays.call(this);
     },
 
     constructGeoJSObject: function(layer) {

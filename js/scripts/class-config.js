@@ -27,10 +27,11 @@ module.exports = {
             // layer
             // renderer
             selectionAPI: new Types.Bool(false),
-            style:        new Types.Dict(),
+            //style:        new Types.Dict(),
             visible:      new Types.Bool(true),
         },
-        constructorArgs: ['bin', 'data', 'gcs', 'selectionAPI', 'style', 'visible'],
+        //constructorArgs: ['bin', 'data', 'gcs', 'selectionAPI', 'style', 'visible'],
+        constructorArgs: ['bin', 'data', 'gcs', 'selectionAPI', 'visible'],
         propsDefinedByGeoJS: ['bin', 'gcs', 'style'],
     },
 

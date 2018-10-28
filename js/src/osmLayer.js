@@ -1,17 +1,21 @@
 var _ = require('underscore');
 var GeoJS = require('geojs');
 
-var autogenosmLayerModel = require('./osmLayer.autogen.js').osmLayerModel;
+var autogen_osmLayerModel = require('./osmLayer.autogen.js').osmLayerModel;
 
 
-var osmLayerModel = autogenosmLayerModel.extend({
+var osmLayerModel = autogen_osmLayerModel.extend({
 
     defaults: function() {
-        return _.extend(autogenosmLayerModel.prototype.defaults.call(this), {
+        return _.extend(autogen_osmLayerModel.prototype.defaults.call(this), {
             _model_name : 'osmLayerModel',
             _model_module : 'pygeojs',
             _model_module_version : '0.1.0',
         });
+    },
+
+    createPropertiesArrays: function() {
+        autogen_osmLayerModel.prototype.createPropertiesArrays.call(this);
     },
 
     constructGeoJSObjectAsync: function() {
@@ -64,7 +68,7 @@ var osmLayerModel = autogenosmLayerModel.extend({
     model_name: 'osmLayerModel',
 
     serializers: _.extend({
-    },  autogenosmLayerModel.serializers),
+    },  autogen_osmLayerModel.serializers),
 
 });
 
