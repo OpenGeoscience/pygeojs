@@ -23,14 +23,38 @@ var sceneModel = widgets.DOMWidgetModel.extend({
             this.send('Received your custom message!');
 
             if (content.method == 'set_zoom_and_center') {
-                let bounds = {
+                let inputBounds = {
                     left:   content.params[0],
                     bottom: content.params[1],
                     right:  content.params[2],
                     top:    content.params[3],
                 }
-                console.log('bounds:');
-                console.dir(bounds);
+                console.log('inputBounds:');
+                console.dir(inputBounds);
+
+                // Adjust the vertical bounds to add top & bottom margin
+                let bounds = {};
+                let margin = 10;
+                let height = this.obj.node().height();
+                if (!height) {
+                    console.log('Using default height of 480px to adjust viewpoint scale');
+                    height = 480;
+                }
+
+                let factor = height / (height - 2.0*margin);
+                if (factor > 1.0) {
+                    console.log(`Adjusting vertical scale by ${factor}`);
+                    let centerY = 0.5 * (inputBounds.top + inputBounds.bottom);
+                    bounds.top = (inputBounds.top - centerY) * factor + centerY;
+                    bounds.bottom = centerY - (centerY - inputBounds.bottom) * factor;
+                }
+                else {
+                    bounds.top = inputBounds.top;
+                    bounds.bottom = inputBounds.bottom;
+                }
+                bounds.left = inputBounds.left;
+                bounds.right = inputBounds.right;
+
                 let zc = this.obj.zoomAndCenterFromBounds(bounds);
                 console.log('zoom & center:');
                 console.dir(zc);
