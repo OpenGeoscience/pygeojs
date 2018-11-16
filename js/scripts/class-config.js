@@ -21,7 +21,8 @@ module.exports = {
             featureType:  new Types.String(''),  // internal
             layer_id:     new Types.String(''),  // internal
 
-            bin:          new Types.Float(null, {nullable:true}),
+            // Todo fix bin, which was getting set to NaN for some reason
+            // bin:          new Types.Float(null, {nullable:true}),
             data:         new Types.Array(),
             gcs:          new Types.String(null, {nullable:true}),
             // layer
@@ -31,8 +32,8 @@ module.exports = {
             visible:      new Types.Bool(true),
         },
         //constructorArgs: ['bin', 'data', 'gcs', 'selectionAPI', 'style', 'visible'],
-        constructorArgs: ['bin', 'data', 'gcs', 'selectionAPI', 'visible'],
-        propsDefinedByGeoJS: ['bin', 'gcs', 'style'],
+        constructorArgs: ['data', 'gcs', 'selectionAPI', 'visible'],
+        propsDefinedByGeoJS: ['gcs'],
     },
 
     featureLayer: {
@@ -69,6 +70,16 @@ module.exports = {
         propsDefinedByGeoJS: ['attribution', 'rendererName', 'zIndex'],
     },
 
+    lineFeature: {
+        relativePath: './lineFeature',
+        superClass: 'feature',
+        // properties: {
+        //     line:                new Types.VectorArray(),
+        //     position:            new Types.VectorArray(),
+        // },
+        // constructorArgs: ['position'],
+    },
+
     osmLayer: {
         superClass: 'tileLayer',
         relativePath: './osmLayer',
@@ -93,6 +104,16 @@ module.exports = {
 
     },
 
+    polygonFeature: {
+        relativePath: './polygonFeature',
+        superClass: 'feature',
+        // Todo handle position, which is optional to geojs,
+        // but an empty array breaks things
+        // properties: {
+        //     position:            new Types.Array(),
+        // },
+        // constructorArgs: ['position'],
+    },
 
     // Placeholder class for tileLayer.
     // Must subclass manually to handle immutable constructor args,

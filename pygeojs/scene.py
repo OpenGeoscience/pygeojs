@@ -77,6 +77,10 @@ class scene(widgets.DOMWidget):
 
         return layer
 
+    def draw(self):
+        """"""
+        self.send({'method': 'draw'});
+
     @traitlets.default('layout')
     def _default_layout(self):
         return widgets.Layout(height='400px', align_self='stretch')

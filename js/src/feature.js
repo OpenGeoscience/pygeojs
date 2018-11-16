@@ -40,11 +40,14 @@ var featureModel = autogen_featureModel.extend({
 
                     // Convert position array to function, as required by GeoJS
                     let positionArray = this.get('position');
-                    if (positionArray) {
+                    if (positionArray && positionArray.length > 0) {
                         // console.log('position:');
                         // console.dir(positionArray);
                         this.obj.position((dataItem, dataIndex) => {
                             // console.debug(`dataIndex ${dataIndex}`);
+                            // console.log(dataItem);
+                            // console.dir(dataItem);
+
                             // Workaround undiagnosed problem where dataIndex
                             // is sometimes undefined. It appears to be realted
                             // to mousemove events.
@@ -68,7 +71,18 @@ var featureModel = autogen_featureModel.extend({
                         console.warn('MISSING position array')
                     }
 
+                    this.on('msg:custom', function(content) {
+                        console.log(`CUSTOM MESSAGE: ${content}:`);
+                        console.dir(content);
 
+                        if (content.method == 'test') {
+                            console.log('Data');
+                            console.dir(this.obj.data());
+                            console.log(`Visible: ${this.obj.visible()}`);
+                            console.log('Style');
+                            console.dir(this.obj.style());
+                        }
+                    });  // on msg:custom
                     // console.log(`geojs feature:`);
                     // console.dir(this.obj);
 

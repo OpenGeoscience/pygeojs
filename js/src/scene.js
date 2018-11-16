@@ -22,7 +22,10 @@ var sceneModel = widgets.DOMWidgetModel.extend({
             console.dir(content);
             this.send('Received your custom message!');
 
-            if (content.method == 'set_zoom_and_center') {
+            if (content.method == 'draw') {
+                this.obj.draw();
+            }
+            else if (content.method == 'set_zoom_and_center') {
                 let inputBounds = {
                     left:   content.params[0],
                     bottom: content.params[1],

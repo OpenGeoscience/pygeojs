@@ -3,7 +3,9 @@ import ipywidgets as widgets
 import traitlets
 
 from .featureLayer_autogen import featureLayer as featureLayerBase
+from .lineFeature_autogen import lineFeature
 from .pointFeature_autogen import pointFeature
+from .polygonFeature_autogen import polygonFeature
 
 
 @widgets.register
@@ -25,8 +27,12 @@ class featureLayer(featureLayerBase):
         # Even though layer_id is a keyword argument to the feature constructors, you
         # MUST provide layer_id, because it is needed to instantiate the feature
         # on the client (javascript) side.
-        if 'point' == feature_type:
+        if 'line' == feature_type:
+            feature = lineFeature(layer_id=self.model_id, featureType=feature_type, **kwargs)
+        elif 'point' == feature_type:
             feature = pointFeature(layer_id=self.model_id, featureType=feature_type, **kwargs)
+        elif 'polygon' == feature_type:
+            feature = polygonFeature(layer_id=self.model_id, featureType=feature_type, **kwargs)
         else:
             raise Exception('Unrecognized feature type \"{}\"'.format(feature_type))
 

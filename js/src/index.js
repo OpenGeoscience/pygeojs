@@ -4,9 +4,11 @@ var loadedModules = [
   require('./feature.autogen'),
   require('./featureLayer'),
   require('./layer.autogen'),
+  require('./lineFeature.autogen'),
   require('./scene'),
   require('./osmLayer'),
   require('./pointFeature.autogen'),
+  require('./polygonFeature.autogen'),
   require('./sceneObject'),
   require('./tileLayer.autogen')
 ];

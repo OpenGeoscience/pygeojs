@@ -414,6 +414,20 @@ var sceneObjectModel = widgets.WidgetModel.extend({
      */
     assignArray: function(obj, key, value) {
         // For some reason, obj is undefined sometimes (wish I knew why)
+
+        // if (key == 'data' || key == 'position') {
+        //     console.log(`key = ${key}, value ${value} :`);
+        //     console.dir(value);
+        //     console.log('object:');
+        //     console.dir(obj);
+        // }
+
+        // // Special handling for position
+        // if (key == 'position' && value.length < 1) {
+        //     console.debug('Skipping position assignment');
+        //     return;
+        // }
+
         if (!obj) {
             return;
         }
@@ -421,6 +435,12 @@ var sceneObjectModel = widgets.WidgetModel.extend({
             console.warn(`obj[key] undefined for object type ${typeof obj}, key ${key}`)
             return;
         }
+
+        if (typeof obj[key] == 'function') {
+            obj[key](value);
+            return
+        }
+
         var existing = obj[key];
         if (!existing.splice) {
             console.warn(`obj[key].splice undefined for object type ${typeof obj}, key ${key}`);
