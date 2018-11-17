@@ -1,8 +1,12 @@
 module.exports['version'] = require('../package.json').version
 
+var GeoJS = require('geojs');
+console.log(`Using geojs version ${GeoJS.version}`);
+
 var loadedModules = [
   require('./feature.autogen'),
   require('./featureLayer'),
+  require('./geojsonFeatureCollection'),
   require('./layer.autogen'),
   require('./lineFeature.autogen'),
   require('./scene'),

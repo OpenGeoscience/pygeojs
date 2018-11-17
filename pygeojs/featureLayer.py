@@ -3,6 +3,7 @@ import ipywidgets as widgets
 import traitlets
 
 from .featureLayer_autogen import featureLayer as featureLayerBase
+from .geojsonFeatureCollection import geojsonFeatureCollection
 from .lineFeature_autogen import lineFeature
 from .pointFeature_autogen import pointFeature
 from .polygonFeature_autogen import polygonFeature
@@ -41,6 +42,17 @@ class featureLayer(featureLayerBase):
         self._features = tuple(feature_list)
 
         return feature
+
+
+    def readGeoJSON(self, data):
+        """Reads geojson input and adds to current layer.
+
+        :param data: Can be either string for filename (path) or URL,
+            or python dictionary representing the feature collection.
+        """
+        # Don't add to feature list, because new features are
+        # initialized by geojs not wrappers
+        return geojsonFeatureCollection(self, data)
 
 
 if six.PY3:
