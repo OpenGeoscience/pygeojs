@@ -9,6 +9,10 @@ var tileLayerModel = autogen_tileLayerModel.extend({
         tileLayerModel.__super__.initialize.apply(this, arguments);
     },
 
+    createPropertiesArrays: function() {
+        autogen_tileLayerModel.prototype.createPropertiesArrays.call(this);
+    },
+
     // Returns list of immutable constructor argument names (hard-coded)
     getConstructorArgNames: function() {
         let argNames = [

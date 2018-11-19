@@ -18,18 +18,22 @@ module.exports = {
         superClass: 'sceneObject',
         relativePath: './feature',
         properties: {
-            _data:         new Types.Array(),
+            featureType:  new Types.String(''),  // internal
+            layer_id:     new Types.String(''),  // internal
 
-            bin:          new Types.Float(null, {nullable:true}),
+            // Todo fix bin, which was getting set to NaN for some reason
+            // bin:          new Types.Float(null, {nullable:true}),
             data:         new Types.Array(),
             gcs:          new Types.String(null, {nullable:true}),
             // layer
             // renderer
             selectionAPI: new Types.Bool(false),
-            style:        new Types.Dict(),
+            //style:        new Types.Dict(),
             visible:      new Types.Bool(true),
         },
-        propsDefinedByGeoJS: ['bin', 'gcs'],
+        //constructorArgs: ['bin', 'data', 'gcs', 'selectionAPI', 'style', 'visible'],
+        constructorArgs: ['data', 'gcs', 'selectionAPI', 'visible'],
+        propsDefinedByGeoJS: ['gcs'],
     },
 
     featureLayer: {
@@ -38,31 +42,42 @@ module.exports = {
         properties: {
             //features?
         },
-        constructorArgs: ['map_id'],
     },
 
     layer: {
         relativePath: './layer',
         properties: {
+            map_id:             new Types.String(''),  // internal use
+
             active:             new Types.Bool(true),
             annotations:        new Types.Array(),
             attribution:        new Types.String(null, {nullable: true}),
             // height
             //id:                 new Types.Int(null, {nullable: true}),
             // initialized
-            map_id:             new Types.String(''),
             name:               new Types.String(''),
             opacity:            new Types.Float(1.0),
-            // renderer
-            // rendererName
+            renderer:           new Types.String(null, {nullable: true}),
+            rendererName:       new Types.String(null, {nullable: true}),
             selectionAPI:       new Types.Bool(true),
             sticky:             new Types.Bool(true),
             visible:            new Types.Bool(true),
             // width
             zIndex:             new Types.Int(null, {nullable: true}),
         },
-        constructorArgs: ['map_id'],
-        propsDefinedByGeoJS: ['attribution', 'zIndex'],
+        constructorArgs: ['active', 'annotations', 'attribution', 'name',
+            'opacity', 'renderer', 'selectionAPI', 'sticky', 'visible', 'zIndex'],
+        propsDefinedByGeoJS: ['attribution', 'rendererName', 'zIndex'],
+    },
+
+    lineFeature: {
+        relativePath: './lineFeature',
+        superClass: 'feature',
+        // properties: {
+        //     line:                new Types.VectorArray(),
+        //     position:            new Types.VectorArray(),
+        // },
+        // constructorArgs: ['position'],
     },
 
     osmLayer: {
@@ -71,7 +86,7 @@ module.exports = {
         properties: {
             mapOpacity: new Types.Float(null, {nullable:true, minValue:0.0, maxValue:1.0})
         },
-        constructorArgs: ['map_id'],
+        constructorArgs: ['mapOpacity'],
         propsDefinedByGeoJS: ['mapOpacity'],
     },
 
@@ -79,15 +94,26 @@ module.exports = {
         relativePath: './pointFeature',
         superClass: 'feature',
         properties: {
-            // clustering
+            clustering:          new Types.Bool(false),
             dynamicDraw:         new Types.Bool(false),
             position:            new Types.Array(),
             primitiveShape:      new Types.String('sprite'),
-            style:               new Types.Dict(),
         },
+        constructorArgs: ['clustering', 'dynamicDraw', 'position', 'primitiveShape'],
+        propsDefinedByGeoJS: ['clustering', 'dynamicDraw', 'primitiveShape'],
 
     },
 
+    polygonFeature: {
+        relativePath: './polygonFeature',
+        superClass: 'feature',
+        // Todo handle position, which is optional to geojs,
+        // but an empty array breaks things
+        // properties: {
+        //     position:            new Types.Array(),
+        // },
+        // constructorArgs: ['position'],
+    },
 
     // Placeholder class for tileLayer.
     // Must subclass manually to handle immutable constructor args,
@@ -116,6 +142,5 @@ module.exports = {
             // wrapX:             new Types.Bool(true, {nullable: true}),
             // wrapY:             new Types.Bool(false, {nullable: true}),
         },
-        constructorArgs: ['map_id']
     }
 }

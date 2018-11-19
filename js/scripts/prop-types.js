@@ -93,7 +93,7 @@ class ThreeType extends BaseType {
             typeName, this.nullable, this.args, this.kwargs, this.getTagParts());
     }
     getPropArrayName() {
-        return 'three_properties';
+        return 'geojs_properties';
     }
     getPropertyConverterFn() {
         return 'convertThreeType';
@@ -173,7 +173,7 @@ class ThreeTypeArray extends BaseType {
         return baseType + this.getTagString();
     }
     getPropArrayName() {
-        return 'three_nested_properties';
+        return 'geojs_nested_properties';
     }
     getPropertyConverterFn() {
         return 'convertThreeTypeArray';
@@ -203,7 +203,7 @@ class ThreeTypeDict extends BaseType {
         return `Dict(Instance(${this.typeName}))${this.getTagString()}`;
     }
     getPropArrayName() {
-        return 'three_nested_properties';
+        return 'geojs_nested_properties';
     }
     getPropertyConverterFn() {
         return 'convertThreeTypeDict';
@@ -227,7 +227,7 @@ class BufferMorphAttributes extends BaseType {
         return 'Dict(Tuple(Union([\n' + instances.join(',\n') + '\n    ])))' + this.getTagString();
     }
     getPropArrayName() {
-        return 'three_nested_properties';
+        return 'geojs_nested_properties';
     }
     getPropertyConverterFn() {
         return 'convertMorphAttributes';

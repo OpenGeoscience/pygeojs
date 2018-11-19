@@ -16,6 +16,55 @@ var sceneModel = widgets.DOMWidgetModel.extend({
         this.constructGeoJSObject();
         this.syncToGeoJSObj(true);
         sceneObjectModel.prototype.setupListeners.call(this);
+
+        this.on('msg:custom', function(content) {
+            console.log(`CUSTOM MESSAGE: ${content}:`);
+            console.dir(content);
+            this.send('Received your custom message!');
+
+            if (content.method == 'draw') {
+                this.obj.draw();
+            }
+            else if (content.method == 'set_zoom_and_center') {
+                let inputBounds = {
+                    left:   content.params[0],
+                    bottom: content.params[1],
+                    right:  content.params[2],
+                    top:    content.params[3],
+                }
+                console.log('inputBounds:');
+                console.dir(inputBounds);
+
+                // Adjust the vertical bounds to add top & bottom margin
+                let bounds = {};
+                let margin = 10;
+                let height = this.obj.node().height();
+                if (!height) {
+                    console.log('Using default height of 480px to adjust viewpoint scale');
+                    height = 480;
+                }
+
+                let factor = height / (height - 2.0*margin);
+                if (factor > 1.0) {
+                    console.log(`Adjusting vertical scale by ${factor}`);
+                    let centerY = 0.5 * (inputBounds.top + inputBounds.bottom);
+                    bounds.top = (inputBounds.top - centerY) * factor + centerY;
+                    bounds.bottom = centerY - (centerY - inputBounds.bottom) * factor;
+                }
+                else {
+                    bounds.top = inputBounds.top;
+                    bounds.bottom = inputBounds.bottom;
+                }
+                bounds.left = inputBounds.left;
+                bounds.right = inputBounds.right;
+
+                let zc = this.obj.zoomAndCenterFromBounds(bounds);
+                console.log('zoom & center:');
+                console.dir(zc);
+                this.obj.center(zc.center);
+                this.obj.zoom(zc.zoom - 0.5);  // zoom out by fixed offset
+            }
+        }.bind(this));
     },
 
     defaults: function() {
@@ -56,8 +105,8 @@ var sceneModel = widgets.DOMWidgetModel.extend({
         console.log('scene.constructGeoJSObject()');
         // console.dir(this);
         //console.assert(this.el, 'Error: this.el not defined');
-        let doc = new Document;
-        this.mapElement = doc.createElement('div');
+
+        this.mapElement = document.createElement('div');
         this.mapElement.setAttribute('class', 'geojs-doc-element');
         this.mapElement.setAttribute('style', 'height: 100%; width: 100%');
         this.obj = geojs.map({node: this.mapElement});

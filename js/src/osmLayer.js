@@ -1,17 +1,21 @@
 var _ = require('underscore');
 var GeoJS = require('geojs');
 
-var autogenosmLayerModel = require('./osmLayer.autogen.js').osmLayerModel;
+var autogen_osmLayerModel = require('./osmLayer.autogen.js').osmLayerModel;
 
 
-var osmLayerModel = autogenosmLayerModel.extend({
+var osmLayerModel = autogen_osmLayerModel.extend({
 
     defaults: function() {
-        return _.extend(autogenosmLayerModel.prototype.defaults.call(this), {
+        return _.extend(autogen_osmLayerModel.prototype.defaults.call(this), {
             _model_name : 'osmLayerModel',
             _model_module : 'pygeojs',
             _model_module_version : '0.1.0',
         });
+    },
+
+    createPropertiesArrays: function() {
+        autogen_osmLayerModel.prototype.createPropertiesArrays.call(this);
     },
 
     constructGeoJSObjectAsync: function() {
@@ -19,15 +23,27 @@ var osmLayerModel = autogenosmLayerModel.extend({
         let map_model_id = this.get('map_id');
         console.log(`map_model_id: ${map_model_id}`);
 
-        // Build dictionary of constructor-only args (tileLayer)
-        let args = {};
+        // Build dictionary of constructor-only args from tileLayer
+        // These are read-only traits that don't otherwise get set
+        // on client side.
+        let args = Object.assign({}, this.constructor.args);
         let argNames = this.getConstructorArgNames();
         for (let argName of argNames) {
             let argValue = this.get(argName);
+            // console.log(`argName ${argName}, argValue ${argValue}`);
             console.assert(argValue !== undefined, `${argName} not defined`);
             if (argValue != null) { // null ==> default
                 args[argName] = argValue;
             }
+        }
+
+        // Two workarounds for layer attribution:
+        // * Current logic does not propogate superclass constructor args
+        // * Change null to undefined in order to workaround the lack of
+        // "undefined" values in the python model.
+        args.attribution = this.get('attribution');
+        if (args.attribution === null) {
+            delete args.attribution;
         }
 
         return new Promise(resolve => {
@@ -52,7 +68,7 @@ var osmLayerModel = autogenosmLayerModel.extend({
     model_name: 'osmLayerModel',
 
     serializers: _.extend({
-    },  autogenosmLayerModel.serializers),
+    },  autogen_osmLayerModel.serializers),
 
 });
 

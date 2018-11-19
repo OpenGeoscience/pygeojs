@@ -337,7 +337,13 @@ var sceneObjectModel = widgets.WidgetModel.extend({
                     return;
                 }
             }
-            if (!converterName) {
+
+            if ((!converterName && (this.obj[propName]) instanceof Function)) {
+            // if (!converterName) {
+            //     if (typeof this.obj[propName] != 'function') {
+            //         console.log(`${propName} is not a function`);
+            //         return
+            //     }
                 toSet[propName] = this.obj[propName]();
                 return;
             }
@@ -345,7 +351,13 @@ var sceneObjectModel = widgets.WidgetModel.extend({
             converterName = converterName + 'ThreeToModel';
             var converterFn = this[converterName];
             if (!converterFn) {
-                throw new Error('invalid converter name: ' + converterName);
+                // DO NOT REMOVE NEXT LINE without talking to johnt first.
+                // It's borderline madness, but removing this exception breaks
+                // point features, and who knows what else. Sure wish I knew why...
+                // The breaking logic (chaning it to a warning) follows:
+                throw new Error(`invalid converter name ${converterName} for prop ${propName}`);
+                // console.warn(`invalid converter name ${converterName} for prop ${propName}`);
+                // return;
             }
 
             toSet[propName] = converterFn.bind(this)(this.obj[propName], propName);
@@ -402,10 +414,39 @@ var sceneObjectModel = widgets.WidgetModel.extend({
      */
     assignArray: function(obj, key, value) {
         // For some reason, obj is undefined sometimes (wish I knew why)
+
+        // if (key == 'data' || key == 'position') {
+        //     console.log(`key = ${key}, value ${value} :`);
+        //     console.dir(value);
+        //     console.log('object:');
+        //     console.dir(obj);
+        // }
+
+        // // Special handling for position
+        // if (key == 'position' && value.length < 1) {
+        //     console.debug('Skipping position assignment');
+        //     return;
+        // }
+
         if (!obj) {
             return;
         }
+        if (!obj[key]) {
+            console.warn(`obj[key] undefined for object type ${typeof obj}, key ${key}`)
+            return;
+        }
+
+        if (typeof obj[key] == 'function') {
+            obj[key](value);
+            return
+        }
+
         var existing = obj[key];
+        if (!existing.splice) {
+            console.warn(`obj[key].splice undefined for object type ${typeof obj}, key ${key}`);
+            console.dir(existing);
+            return;
+        }
         if (existing !== null && existing !== undefined) {
             // existing.splice(0, existing.length, ...value);
             existing.splice.apply(existing, [0, existing.length].concat(value));
