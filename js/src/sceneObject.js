@@ -703,6 +703,16 @@ var sceneObjectModel = widgets.WidgetModel.extend({
         Object.assign(obj[key], value);
     },
 
+    assignStyle: function(obj, key, value) {
+        // Assign item to object's style
+        if (obj.style && {}.toString.call(obj.style) === '[object Function]') {
+            obj.style(key, value);
+        }
+        else {
+            console.warn(`obj type ${typeof obj} has no style method`);
+        }
+    },
+
     convertUniformDictModelToThree: function(modelDict) {
         if (modelDict === null) {
             return null;

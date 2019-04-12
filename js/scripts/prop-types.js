@@ -267,7 +267,17 @@ class Int extends BaseType {
         }
         return `CInt(${this.getPythonDefaultValue()}, ${nullableStr}${limits})${this.getTagString()}`;
     }
+}
 
+class StyleInt extends Int {
+    // Assigns int value to object style
+    // Only syncs one way, from python (kernel) to view (js)
+    constructor(defaultValue, options) {
+        super(defaultValue, options);
+    }
+    getPropertyAssignmentFn() {
+        return 'assignStyle';
+    }
 }
 
 class Float extends BaseType {
@@ -295,6 +305,17 @@ class Float extends BaseType {
 
 }
 
+class StyleFloat extends Float {
+    // Assigns float value to object style
+    // Only syncs one way, from python (kernel) to view (js)
+    constructor(defaultValue, options) {
+        super(defaultValue, options);
+    }
+    getPropertyAssignmentFn() {
+        return 'assignStyle';
+    }
+}
+
 class StringType extends BaseType {
     constructor(defaultValue, options) {
         super(options);
@@ -304,7 +325,17 @@ class StringType extends BaseType {
         const nullableStr = this.getNullableStr();
         return `Unicode(${this.getPythonDefaultValue()}, ${nullableStr})${this.getTagString()}`;
     }
+}
 
+class StyleString extends StringType {
+    // Assigns string value to object style
+    // Only syncs one way, from python (kernel) to view (js)
+    constructor(defaultValue, options) {
+        super(defaultValue, options);
+    }
+    getPropertyAssignmentFn() {
+        return 'assignStyle';
+    }
 }
 
 class Enum extends BaseType {
@@ -596,4 +627,8 @@ module.exports = {
     Matrix3: Matrix3,
     Matrix4: Matrix4,
     Euler: Euler,
+
+    StyleFloat: StyleFloat,
+    StyleInt: StyleInt,
+    StyleString: StyleString,
 };

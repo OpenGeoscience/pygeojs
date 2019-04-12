@@ -13,6 +13,7 @@ var loadedModules = [
   require('./osmLayer'),
   require('./pointFeature.autogen'),
   require('./polygonFeature.autogen'),
+  require('./quadFeature.autogen'),
   require('./sceneObject'),
   require('./tileLayer.autogen')
 ];
