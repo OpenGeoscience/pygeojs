@@ -3,8 +3,9 @@ Some utility functions for notebooks using pygeojs
 """
 
 import base64
+import json
 import os
-from urllib.parse import urlparse
+import urllib
 
 def _lookup_mime(path):
     """Determines mime type from extension"""
@@ -38,12 +39,14 @@ def img2base64(source, mime=None):
     url = None
 
     # Is the source a URL?
-    p = urlparse(source)
+    p = urllib.parse.urlparse(source)
     if p.scheme == 'file':
         path = os.path.abspath(os.path.join(p.netloc, p.path))
     elif bool(p.scheme) and bool(p.netloc):
         url = source
         path = p.path
+    else:
+        path = source
 
     if mime is None:
         mime = _lookup_mime(path)
@@ -70,3 +73,21 @@ def img2base64(source, mime=None):
     prefix = 'data:{};base64,'.format(mime)
     encoded_data = prefix + encoded_bytes.decode('ascii')
     return encoded_data
+
+def get_tiles_url(girder_url, item_id, mapnik_style=None):
+    """Constructs tiles url for girder large-image display
+
+    """
+    base_url = '{}/api/v1/item/{}/tiles/zxy/{{z}}/{{x}}/{{y}}'.format(
+        girder_url, item_id)
+    mapnik_string = ''
+    if mapnik_style:
+        if isinstance(mapnik_style, str):
+            style_string = mapnik_style
+        else:
+            style_string = json.dumps(mapnik_style)
+        encoded_string = urllib.parse.quote_plus(style_string)
+        mapnik_string = '&style={}'.format(encoded_string)
+    tiles_url = '{}?encoding=PNG&projection=EPSG:3857{}'.format(
+        base_url, mapnik_string)
+    return tiles_url
