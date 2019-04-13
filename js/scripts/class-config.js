@@ -119,10 +119,9 @@ module.exports = {
         relativePath: './quadFeature',
         superClass: 'feature',
         properties: {
-            cacheQuads: new Types.Bool(true),
+            cacheQuads: new Types.Bool(false),
             color:      new Types.StyleString('#ffffff'),
-            //image:      new Types.String(null, {nullable: true}),  // filename
-            opacity:    new Types.StyleFloat(1.0, {nullable: true, minValue: 0.0, maxValue: 1.0})
+            opacity:    new Types.StyleFloat(1.0, {minValue: 0.0, maxValue: 1.0}),
         }
     },
 

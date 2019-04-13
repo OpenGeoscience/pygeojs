@@ -6,14 +6,17 @@ ipywidget wrapper for GeoJS
 Installation
 ------------
 
-To install use pip:
+Before installing, setup a virtual environment and install jupyter
+there. Then install either a release or developer version as follows.
+
+For a release installation, use pip:
 
     $ pip install pygeojs
     $ jupyter nbextension enable --py --sys-prefix @johnkit/pygeojs
     $ jupyter labextension install @johnkit/pygeojs
 
 
-For a development installation (requires npm),
+For a development installation (requires pip & npm),
 
     $ git clone https://github.com//pygeojs.git
     $ cd pygeojs
