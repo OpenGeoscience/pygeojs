@@ -277,9 +277,9 @@ var sceneObjectModel = widgets.WidgetModel.extend({
 
     // push data from model to geojs object
     syncToGeoJSObj: function(force) {
-            // console.log('property_assigners:');
-            // console.dir(this.property_assigners);
-            console.debug(`${this.constructor.model_name} syncToGeoJSObj(), obj:`);
+        // console.log('property_assigners:');
+        // console.dir(this.property_assigners);
+        console.debug(`${this.constructor.model_name} syncToGeoJSObj(), obj: ${this.obj}`);
 
         _.each(this.property_converters, function(converterName, propName) {
             // console.log(`converterName ${converterName}, propName ${propName}`)
@@ -289,6 +289,7 @@ var sceneObjectModel = widgets.WidgetModel.extend({
             }
             var assigner = this[this.property_assigners[propName]] || this.assignDirect;
             assigner = assigner.bind(this);
+            console.debug(`propName that changed: ${propName}, assigner ${assigner}, converterName ${converterName}`);
             if (!converterName) {
                 assigner(this.obj, propName, this.get(propName));
                 return;
@@ -705,6 +706,7 @@ var sceneObjectModel = widgets.WidgetModel.extend({
 
     assignStyle: function(obj, key, value) {
         // Assign item to object's style
+        console.debug(`Assigning style key ${key} to ${value}`);
         if (obj.style && {}.toString.call(obj.style) === '[object Function]') {
             obj.style(key, value);
         }
