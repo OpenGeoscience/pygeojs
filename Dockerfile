@@ -7,9 +7,12 @@ FROM jupyter/base-notebook
 # Install jupyterlab widget manager (needed for custom widgets)
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
-# Copy source files
 USER root
-ADD ./ /home/$NB_USER/pygeojs
+RUN apt-get update
+RUN apt-get install --no-install-recommends -y less vim
+
+# Copy source files
+COPY ./ /home/$NB_USER/pygeojs
 RUN chown -R ${NB_UID}:${NB_UID} ${HOME}
 USER ${NB_USER}
 
@@ -23,8 +26,8 @@ WORKDIR /home/$NB_USER/pygeojs
 RUN python setup.py install
 RUN jupyter nbextension install --py --symlink --sys-prefix pygeojs
 RUN jupyter nbextension enable --py --sys-prefix pygeojs
-RUN jupyter labextension install js
+RUN jupyter labextension install js; exit 0
 
 # Setup entry point
-WORKDIR /home/$NB_USER/pygeojs/notebooks
-CMD ["jupyter", "lab", "--ip", "0.0.0.0"]
+# WORKDIR /home/$NB_USER/pygeojs/notebooks
+# CMD ["jupyter", "lab", "--ip", "0.0.0.0"]
