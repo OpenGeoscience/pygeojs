@@ -17,7 +17,8 @@
   ],
   "files": [
     "src/*.js",
-    "dist/*.js"
+    "dist/*.js",
+    "scripts/*"
   ],
   "scripts": {
     "autogen": "node ./scripts/generate-wrappers.js",

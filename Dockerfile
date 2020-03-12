@@ -1,5 +1,5 @@
-# docker build -t pygeojs .
-# docker run -it --rm -p 8888:8888 --hostname localhost pygeojs
+# docker build -t johnkit/pygeojs .
+# docker run --rm -it -p 8888:8888 --hostname localhost johnkit/pygeojs
 # Find the URL in the console and open browser to that url
 
 FROM jupyter/base-notebook

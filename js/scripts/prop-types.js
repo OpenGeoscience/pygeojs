@@ -275,6 +275,9 @@ class StyleInt extends Int {
     constructor(defaultValue, options) {
         super(defaultValue, options);
     }
+    getPropertyConverterFn() {
+        return null;
+    }
     getPropertyAssignmentFn() {
         return 'assignStyle';
     }
@@ -311,7 +314,11 @@ class StyleFloat extends Float {
     constructor(defaultValue, options) {
         super(defaultValue, options);
     }
+    getPropertyConverterFn() {
+        return null;
+    }
     getPropertyAssignmentFn() {
+        console.log(`returning assignStyle for StyleFloat`);
         return 'assignStyle';
     }
 }

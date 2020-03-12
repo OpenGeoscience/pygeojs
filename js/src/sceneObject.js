@@ -290,7 +290,9 @@ var sceneObjectModel = widgets.WidgetModel.extend({
             var assigner = this[this.property_assigners[propName]] || this.assignDirect;
             assigner = assigner.bind(this);
             console.debug(`propName that changed: ${propName}, assigner ${assigner}, converterName ${converterName}`);
-            if (!converterName) {
+            console.debug(`propName == opacity? ${propName == "opacity"}`);
+            if (!converterName || (propName == 'opacity')) {
+                console.debug('Calling assigner');
                 assigner(this.obj, propName, this.get(propName));
                 return;
             }
@@ -708,7 +710,10 @@ var sceneObjectModel = widgets.WidgetModel.extend({
         // Assign item to object's style
         console.debug(`Assigning style key ${key} to ${value}`);
         if (obj.style && {}.toString.call(obj.style) === '[object Function]') {
-            obj.style(key, value);
+            //obj.style(key, value);
+            let d = obj.style();
+            obj[key] = value;
+            obj.style(d);
         }
         else {
             console.warn(`obj type ${typeof obj} has no style method`);
