@@ -7,6 +7,7 @@ from .geojsonFeatureCollection import geojsonFeatureCollection
 from .lineFeature_autogen import lineFeature
 from .pointFeature_autogen import pointFeature
 from .polygonFeature_autogen import polygonFeature
+from .quadFeature_autogen import quadFeature
 
 
 @widgets.register
@@ -34,6 +35,8 @@ class featureLayer(featureLayerBase):
             feature = pointFeature(layer_id=self.model_id, featureType=feature_type, **kwargs)
         elif 'polygon' == feature_type:
             feature = polygonFeature(layer_id=self.model_id, featureType=feature_type, **kwargs)
+        elif 'quad' == feature_type:
+            feature = quadFeature(layer_id=self.model_id, featureType=feature_type, **kwargs)
         else:
             raise Exception('Unrecognized feature type \"{}\"'.format(feature_type))
 

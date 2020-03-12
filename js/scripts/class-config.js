@@ -115,6 +115,16 @@ module.exports = {
         // constructorArgs: ['position'],
     },
 
+    quadFeature: {
+        relativePath: './quadFeature',
+        superClass: 'feature',
+        properties: {
+            cacheQuads: new Types.Bool(false),
+            color:      new Types.StyleString('#ffffff'),
+            opacity:    new Types.StyleFloat(1.0, {minValue: 0.0, maxValue: 1.0}),
+        }
+    },
+
     // Placeholder class for tileLayer.
     // Must subclass manually to handle immutable constructor args,
     // to avoid error in js widget.

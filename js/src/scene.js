@@ -61,8 +61,8 @@ var sceneModel = widgets.DOMWidgetModel.extend({
                 let zc = this.obj.zoomAndCenterFromBounds(bounds);
                 console.log('zoom & center:');
                 console.dir(zc);
-                this.obj.center(zc.center);
-                this.obj.zoom(zc.zoom - 0.5);  // zoom out by fixed offset
+                this.set('center', zc.center);
+                this.set('zoom', zc.zoom - 0.5);  // zoom out by fixed offset
             }
         }.bind(this));
     },
@@ -110,6 +110,8 @@ var sceneModel = widgets.DOMWidgetModel.extend({
         this.mapElement.setAttribute('class', 'geojs-doc-element');
         this.mapElement.setAttribute('style', 'height: 100%; width: 100%');
         this.obj = geojs.map({node: this.mapElement});
+        this.obj.center(this.get('center'));
+        this.obj.zoom(this.get('zoom'));
         // console.log('map object:');
         // console.dir(this.obj);
 
